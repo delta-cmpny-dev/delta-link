@@ -5,8 +5,10 @@
 :root{--navy:#112639;--teal:#2cc3a4;--grey:#83909b;--rule:#d5dce0;--line:#06c755;--dock:80px;color-scheme:light}
 *{box-sizing:border-box}
 html{background:var(--navy);scroll-padding-bottom:calc(var(--dock) + env(safe-area-inset-bottom,0px) + 24px)}
-body{margin:0;background:#fff;color:var(--navy);font-family:Zen,sans-serif;font-size:16px;font-weight:400;line-height:1.9;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-h1,h2,h3,p,ol,ul{margin:0}
+body{margin:0;background:#fff;color:var(--navy);font-family:Zen,sans-serif;font-size:16px;font-weight:400;line-height:1.9;-webkit-text-size-adjust:100%;text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+/* 日本語は build.py が言葉の区切りに入れた <wbr> でだけ改行する（keep-all）。1つのかたまりが入りきらない時だけ、どこでも折り返す（anywhere）。 */
+h1,h2,h3,p,ol,ul,dl,dd{margin:0}
+.nb{display:inline-block;max-width:100%}
 ol,ul{padding:0;list-style:none}
 a{color:inherit;text-underline-offset:5px}
 img,svg{display:block;max-width:100%}
@@ -55,9 +57,49 @@ h2{font-family:Shippori,serif;font-size:29px;font-weight:500;line-height:1.5;let
 .work-status.done{background:var(--navy);color:#fff}
 .work-status.ongoing{background:#fff;color:var(--navy);border-color:var(--grey)}
 .work-status.ongoing::before{background:var(--navy)}
-.work-services{display:flex;flex-wrap:wrap;gap:7px;margin:24px 0 16px}
-.work-services li{font-size:13px;line-height:1.6;padding:3px 9px;background:#eef2f4;max-width:100%;overflow-wrap:anywhere}
-.work-text{text-wrap:pretty;font-size:15px;line-height:2;overflow-wrap:anywhere}
+.work-services{display:flex;flex-wrap:wrap;gap:7px;margin:24px 0 18px}
+.work-services li{font-size:13px;line-height:1.6;padding:3px 9px;background:#eef2f4;max-width:100%}
+.work-items{border-top:1px solid var(--rule)}
+.work-item{padding:14px 0 15px}
+.work-item+.work-item{border-top:1px solid var(--rule)}
+.work-item-name{position:relative;padding-left:15px;font-size:15px;font-weight:700;line-height:1.6}
+.work-item-name::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;background:var(--teal)}
+.work-item-text{text-wrap:pretty;font-size:14px;line-height:1.9;margin-top:4px;padding-left:15px}
+.work-item-link-wrap{padding-left:15px;margin-top:2px}
+.work-item-link{display:inline-flex;align-items:center;gap:7px;min-height:44px;font-size:14px;font-weight:700;line-height:1.5;color:var(--navy)}
+.work-item-link .arrow{width:15px;height:15px;flex:none}
+.work-item-link:hover .arrow{transform:translateX(2px)}
+.genre-summary{position:relative;background:var(--navy);color:#fff;padding:28px 20px 22px;margin-bottom:44px}
+.genre-summary::before{content:"";position:absolute;left:0;top:0;width:48px;height:2px;background:var(--teal)}
+.genre-summary a:focus-visible{outline-color:#fff}
+.genre-eyebrow{color:var(--teal);font-size:10px;letter-spacing:.22em}
+.genre-title{font-family:Shippori,serif;font-size:21px;font-weight:500;letter-spacing:.06em;line-height:1.6;margin-top:6px}
+.genre-total{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 0 4px;border-top:1px solid rgba(255,255,255,.24);border-bottom:1px solid rgba(255,255,255,.24)}
+.genre-total>div{padding:12px 0 13px 12px;border-left:1px solid rgba(255,255,255,.24)}
+.genre-total>div:first-child{border-left:0;padding-left:0}
+.genre-total dt{display:flex;align-items:center;gap:6px;font-size:12px;line-height:1.6;color:#d5dde3}
+.genre-total dd{display:flex;align-items:baseline;gap:3px;font-size:12px;line-height:1;margin-top:7px}
+.genre-big{font-family:Outfit,sans-serif;font-size:32px;font-weight:500;line-height:1}
+.key{width:10px;height:10px;flex:none}
+.key.done,.cell.done{background:var(--teal)}
+.key.ongoing,.cell.ongoing{background:transparent;box-shadow:inset 0 0 0 1.5px var(--teal)}
+.genre{padding:16px 0 13px;border-top:1px solid rgba(255,255,255,.14)}
+.genre:first-child{border-top:0}
+.genre-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.genre-name{font-size:15px;font-weight:700;line-height:1.6}
+.genre-count{flex:none;display:flex;align-items:baseline;gap:3px;font-size:12px;line-height:1}
+.genre-num{font-family:Outfit,sans-serif;font-size:26px;font-weight:500;line-height:1}
+/* 1マス＝1件。マスの幅は決まっていて、件数が多いほどメーターが長い。入りきらない時は次の行へ折り返す。 */
+.genre-meter{display:flex;flex-wrap:wrap;gap:3px;margin:10px 0 8px}
+.cell{flex:none;width:20px;height:10px}
+.cell.next{margin-left:4px}
+.genre-works{display:flex;flex-wrap:wrap;font-size:13px;line-height:1.7;color:#d5dde3}
+.genre-works li{display:inline-flex;align-items:center;gap:6px;margin-right:14px}
+.genre-works .key{width:8px;height:8px}
+.genre-works-count{font-family:Outfit,Zen,sans-serif;font-size:12px;color:#d5dde3}
+.genre-works a{display:inline-block;padding:3px 0;color:#d5dde3;text-decoration-color:rgba(213,221,227,.55);text-underline-offset:4px}
+.genre-note{font-size:12px;line-height:1.8;color:#d5dde3;margin:10px 0 4px}
+.work-name{scroll-margin-top:24px}
 .contact{position:relative;isolation:isolate;overflow:hidden;background:var(--navy);color:#fff}
 .contact-art{position:absolute;z-index:-1;width:380px;right:-128px;top:-90px;color:var(--grey);opacity:.27;pointer-events:none}
 .contact-inner{padding-top:48px;padding-bottom:44px}
@@ -90,8 +132,10 @@ h2{font-family:Shippori,serif;font-size:29px;font-weight:500;line-height:1.5;let
   .work-top{grid-template-columns:56px minmax(0,1fr);gap:20px}
   .work-name{font-size:22px}.work-about{font-size:13px}
   .work-status{margin-top:12px}
-  .work-services{margin-left:76px;margin-top:22px}
-  .work-text{margin-left:76px;font-size:16px}
+  .work-services,.work-items{margin-left:76px}
+  .work-item-name{font-size:16px}.work-item-text{font-size:15px}
+  .genre-summary{padding:34px 34px 26px}.genre-title{font-size:23px}
+  .cell{width:26px}
   .contact-inner{padding-block:65px;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:center}
   .contact-inner::before{position:absolute;top:38px;margin:0}
   .contact-message{font-size:25px}.contact-note{font-size:14px}
