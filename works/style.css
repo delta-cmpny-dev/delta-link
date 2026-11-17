@@ -23,8 +23,10 @@ a:focus-visible{outline:3px solid var(--navy);outline-offset:5px}
 .lockup{display:flex;align-items:center;gap:11px}
 .mark{filter:brightness(0) invert(1);flex:0 0 25px;width:25px;height:27px}
 .wordmark{width:186px;height:auto}
-.hero-art{position:absolute;z-index:-1;width:470px;right:-115px;top:38px;color:var(--grey);pointer-events:none}
-.hero-art svg,.contact-art svg{width:100%;height:auto}
+/* マークの線画は帯の中に全部収める（2026-11-17 本人「マーク背景が切れてるからちゃんと納めて」）。帯の高さに合わせて大きさを決める。 */
+.hero-art{position:absolute;z-index:-1;top:24px;bottom:24px;right:16px;aspect-ratio:476/506;color:var(--grey);pointer-events:none}
+.hero-art svg{width:100%;height:100%}
+.contact-art svg{width:100%;height:auto}
 .hero-art path,.contact-art path{fill:none;stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke}
 .hero-art{opacity:.39}
 .catch{font-family:Shippori,serif;font-weight:500;font-size:clamp(21px,5.7vw,27px);line-height:1.85;letter-spacing:.01em;margin:30px 0 24px}
@@ -124,7 +126,7 @@ h2{font-family:Shippori,serif;font-size:29px;font-weight:500;line-height:1.5;let
   .hero-inner{padding-top:52px;padding-bottom:54px}
   .brand .eyebrow{font-size:11px}
   .wordmark{width:220px}.mark{width:30px;height:32px;flex-basis:30px}
-  .hero-art{width:760px;right:-70px;top:-132px}
+  .hero-art{top:36px;bottom:36px;right:40px}
   .catch{font-size:38px;line-height:1.75;margin:80px 0 58px}
   .hero-bottom{flex-direction:row;justify-content:space-between;align-items:center;gap:24px}
   h1{font-size:21px}.page-heading .eyebrow{font-size:11px}
